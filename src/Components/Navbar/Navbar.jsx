@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 
 const Navbar = () => {
   return (
-    <header className="px-4 py-1 border dark:bg-gray-100 dark:text-gray-800">
+    <header className="px-4 py-1 dark:bg-gray-100 dark:text-gray-800">
       <div className="container flex justify-between  mx-auto">
         <Button title={"Add Task"} />
 
