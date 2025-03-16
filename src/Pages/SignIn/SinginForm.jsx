@@ -24,7 +24,7 @@ const SinginForm = () => {
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full border-2">
+      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
         <h2 className="text-2xl font-semibold text-center mb-4">
           Log in to your account
         </h2>
