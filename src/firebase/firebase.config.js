@@ -1,20 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDe-_7IZ_863oOWpd4aCnj1bztbqWOYtyE",
-  authDomain: "scheduler-e26f4.firebaseapp.com",
-  projectId: "scheduler-e26f4",
-  storageBucket: "scheduler-e26f4.firebasestorage.app",
-  messagingSenderId: "515844992176",
-  appId: "1:515844992176:web:b0ed13f332debb6e3e1f75",
-  measurementId: "G-3NNPZKNCY7",
+  apiKey: import.meta.VITE_apiKey,
+  authDomain: import.meta.VITE_authDomain,
+  projectId: import.meta.VITE_projectId,
+  storageBucket: import.meta.VITE_storageBucket,
+  messagingSenderId: import.meta.VITE_messagingSenderId,
+  appId: import.meta.VITE_appId,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app)
