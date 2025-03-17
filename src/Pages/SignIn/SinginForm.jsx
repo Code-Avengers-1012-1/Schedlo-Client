@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
+import { Link, useNavigate } from "react-router";
 
 const SinginForm = () => {
   const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -28,6 +30,7 @@ const SinginForm = () => {
     signIn(formData?.email, formData?.password)
       .then((userCredential) => {
         console.log("Logged In -->", userCredential?.user);
+        navigate('/')
       })
       .catch((err) => {
         console.log("ERR: ", err);
@@ -82,6 +85,7 @@ const SinginForm = () => {
             Log in
           </button>
         </form>
+        <p>New Here? <Link to="/signup">Sign Up</Link></p>
       </div>
     </div>
   );

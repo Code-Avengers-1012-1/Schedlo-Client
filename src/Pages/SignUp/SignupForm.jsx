@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router";
 
 const SignupForm = () => {
   const { signUp } = useAuth();
@@ -111,6 +112,7 @@ const SignupForm = () => {
             Register
           </button>
         </form>
+        <p>Have an Account? <Link to="/signin">Sign In</Link></p>
       </div>
     </div>
   );
