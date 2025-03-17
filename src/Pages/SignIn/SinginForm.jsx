@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
 
 const SinginForm = () => {
+  const { signIn } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,7 +24,16 @@ const SinginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
+
+    signIn(formData?.email, formData?.password)
+      .then((userCredential) => {
+        console.log("Logged In -->", userCredential?.user);
+      })
+      .catch((err) => {
+        console.log("ERR: ", err);
+      });
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
