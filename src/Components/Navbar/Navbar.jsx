@@ -1,19 +1,31 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Button from "../Button/Button";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+  const navigate = useNavigate()
+
+  const handleSignOut = () => {
+    logOut().then(() => {
+      console.log("Successfully Logged Out...");
+      navigate("/signin")
+    });
+  };
+
   return (
     <header className="px-4 py-1 border dark:bg-gray-100 dark:text-gray-800">
       <div className="container flex justify-between  mx-auto">
         <Button title={"Add Task"} />
 
         <div className="items-center flex-shrink-0 hidden lg:flex gap-2">
-          <Link to={"signin"}>
-            <Button title={"Sign In"} />
-          </Link>
-          <Link to={"signup"}>
-            <Button style={"bg-violet-400"} title={"Sign up"} />
-          </Link>
+          {user ? (
+            <button className="btn" onClick={handleSignOut}><Button title={"Sign Out"} /></button>
+          ) : (
+            <Link to={"signin"}>
+              <Button title={"Sign In"} />
+            </Link>
+          )}
         </div>
 
         <button className="p-4 lg:hidden">
