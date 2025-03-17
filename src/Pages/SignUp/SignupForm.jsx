@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
 
 const SignupForm = () => {
+  const { signUp } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,6 +24,14 @@ const SignupForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
+
+    signUp(formData?.email, formData?.password)
+      .then((userCredential) => {
+        console.log("User data --> ", userCredential?.user);
+      })
+      .catch((err) => {
+        console.log("ERR --> ", err);
+      });
   };
 
   return (
