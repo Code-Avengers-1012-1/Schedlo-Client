@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MdSchedule, MdArrowForward } from 'react-icons/md';
+import { AuthContext } from '../../auth/AuthProvider';
 
 const Banner = () => {
+
+  const {name} = useContext(AuthContext)
+
+  console.log("Context name: ", name)
+  
   return (
     <div className="bg-gradient-to-r from-purple-700 to-purple-500 py-16">
       <div className="container mx-auto px-4">
