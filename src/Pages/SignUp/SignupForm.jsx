@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router";
 
 const SignupForm = () => {
+  const { signUp } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,10 +25,18 @@ const SignupForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
+
+    signUp(formData?.email, formData?.password)
+      .then((userCredential) => {
+        console.log("User data --> ", userCredential?.user);
+      })
+      .catch((err) => {
+        console.log("ERR --> ", err);
+      });
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex items-center justify-center min-h-screen p-4">
       <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
         <h2 className="text-2xl font-semibold text-center mb-4">
           Create account
@@ -100,6 +112,7 @@ const SignupForm = () => {
             Register
           </button>
         </form>
+        <p>Have an Account? <Link to="/signin">Sign In</Link></p>
       </div>
     </div>
   );

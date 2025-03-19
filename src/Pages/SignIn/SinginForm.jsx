@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import { Link, useNavigate } from "react-router";
 
 const SinginForm = () => {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,10 +26,20 @@ const SinginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
+
+    signIn(formData?.email, formData?.password)
+      .then((userCredential) => {
+        console.log("Logged In -->", userCredential?.user);
+        navigate('/')
+      })
+      .catch((err) => {
+        console.log("ERR: ", err);
+      });
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full border-2">
+      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
         <h2 className="text-2xl font-semibold text-center mb-4">
           Log in to your account
         </h2>
@@ -70,6 +85,7 @@ const SinginForm = () => {
             Log in
           </button>
         </form>
+        <p>New Here? <Link to="/signup">Sign Up</Link></p>
       </div>
     </div>
   );

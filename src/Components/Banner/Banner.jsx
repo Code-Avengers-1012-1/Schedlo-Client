@@ -1,6 +1,7 @@
 import React from 'react';
 import { MdSchedule, MdArrowForward } from 'react-icons/md';
 
+
 const Banner = () => {
   return (
     <div className="bg-gradient-to-r from-purple-700 to-purple-500 py-16">
