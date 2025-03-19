@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router";
 import Button from "../Button/Button";
 import useAuth from "../../hooks/useAuth";
+import { useState } from "react";
+import SideNavbar from "../SideNavbar/SideNavbar";
 
 const Navbar = ({ onMenuClick }) => {
   const { user, logOut } = useAuth();
@@ -14,24 +16,49 @@ const Navbar = ({ onMenuClick }) => {
   };
 
   return (
-    <header className="px-4 py-2 shadow-xl bg-white dark:bg-gray-100 dark:text-gray-800 fixed w-full left-0 right-0 z-20">
-      <div className="w-full flex justify-between items-center">
-        {/* Mobile Sidebar Toggle Button */}
-        <button className="lg:hidden p-2" onClick={onMenuClick}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-6 h-6 dark:text-gray-800"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
+    <header className="relative dark:bg-gray-100 dark:text-gray-800">
+      <div className="container px-4 py-1 flex justify-between  mx-auto">
+        <Button title={"Add Task"} />
+
+        <div className="items-center flex-shrink-0 hidden md:block lg:flex gap-2">
+          {user ? (
+            <button className="btn" onClick={handleSignOut}>
+              <Button title={"Sign Out"} />
+            </button>
+          ) : (
+            <Link to={"signin"}>
+              <Button title={"Sign In"} />
+            </Link>
+          )}
+        </div>
+
+        <button onClick={() => setIsOpen(!isOpen)} className="p-4 md:hidden">
+          {isOpen ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              className="w-6 h-6 dark:text-gray-800"
+              viewBox="0 0 50 50"
+            >
+              <path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="w-6 h-6 dark:text-gray-800"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          )}
         </button>
 
         {/* Title */}
@@ -55,6 +82,11 @@ const Navbar = ({ onMenuClick }) => {
           )}
         </div>
       </div>
+      {isOpen && (
+        <div className="absolute md:hidden left-0 top-0 bg-gray-100">
+          <SideNavbar />
+        </div>
+      )}
     </header>
   );
 };
