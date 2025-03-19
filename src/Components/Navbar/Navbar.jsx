@@ -4,26 +4,30 @@ import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     logOut().then(() => {
       console.log("Successfully Logged Out...");
-      navigate("/signin")
+      navigate("/signin");
     });
   };
 
   return (
-    <header className="px-4 py-1 border dark:bg-gray-100 dark:text-gray-800">
-      <div className="container flex justify-between  mx-auto">
-        <Button title={"Add Task"} />
+    <header className="px-4 py-2 shadow-xl dark:bg-gray-100 dark:text-gray-800 fixed w-full left-0 right-0 z-10">
+      <div className="w-full flex justify-between items-center">
+        <button className="btn btn-xs md:btn-md">Add Task</button>
+
+        <button className="btn btn-ghost text-lg md:text-3xl font-semibold">Time Scheduler</button>
 
         <div className="items-center flex-shrink-0 hidden lg:flex gap-2">
           {user ? (
-            <button className="btn" onClick={handleSignOut}><Button title={"Sign Out"} /></button>
+            <button onClick={handleSignOut}>
+              <Button title="Sign Out" />
+            </button>
           ) : (
-            <Link to={"signin"}>
-              <Button title={"Sign In"} />
+            <Link to="/signin">
+              <Button title="Sign In" />
             </Link>
           )}
         </div>
