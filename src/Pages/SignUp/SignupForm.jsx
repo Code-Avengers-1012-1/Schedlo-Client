@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
 
 const SignupForm = () => {
-  const { signUp } = useAuth();
+  const { createUser } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -26,7 +26,7 @@ const SignupForm = () => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
 
-    signUp(formData?.email, formData?.password)
+    createUser(formData?.email, formData?.password)
       .then((userCredential) => {
         console.log("User data --> ", userCredential?.user);
       })
