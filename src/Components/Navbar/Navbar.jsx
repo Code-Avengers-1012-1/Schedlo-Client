@@ -4,7 +4,8 @@ import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import SideNavbar from "../SideNavbar/SideNavbar";
 
-const Navbar = ({ onMenuClick }) => {
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
 
@@ -60,27 +61,6 @@ const Navbar = ({ onMenuClick }) => {
             </svg>
           )}
         </button>
-
-        {/* Title */}
-        <button className="btn btn-ghost text-lg md:text-3xl font-semibold">
-          Time Scheduler
-        </button>
-
-        {/* Add Task Button */}
-        <Button title={"Add Task"} />
-
-        {/* Sign In/Sign Out Button */}
-        <div className="items-center flex-shrink-0 hidden lg:flex gap-2">
-          {user ? (
-            <button onClick={handleSignOut}>
-              <Button title="Sign Out" />
-            </button>
-          ) : (
-            <Link to="/signin">
-              <Button title="Sign In" />
-            </Link>
-          )}
-        </div>
       </div>
       {isOpen && (
         <div className="absolute md:hidden left-0 top-0 bg-gray-100">
