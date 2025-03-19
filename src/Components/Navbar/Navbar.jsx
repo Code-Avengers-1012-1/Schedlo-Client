@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
@@ -9,36 +9,46 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    logOut().then(() => {
+  const handleSignOut = async () => {
+    try {
+      await logOut();
       console.log("Successfully Logged Out...");
       navigate("/signin");
-    });
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
   };
+
+  console.log("User Info:", user);
 
   return (
     <header className="relative dark:bg-gray-100 dark:text-gray-800">
-      <div className="container px-4 py-1 flex justify-between  mx-auto">
-        <Button title={"Add Task"} />
+      <div className="container px-4 py-1 flex justify-between items-center">
+        {/* Left - Add Task Button */}
+        <Button title="Add Task" />
 
-        <div className="items-center flex-shrink-0 hidden md:block lg:flex gap-2">
+        {/* Middle - Authentication Buttons */}
+        <div className="hidden md:block">
           {user ? (
-            <button className="btn" onClick={handleSignOut}>
-              <Button title={"Sign Out"} />
+            <button onClick={handleSignOut}>
+              <Link to="/signout">
+                <Button title="Sign Out" />
+              </Link>
             </button>
           ) : (
-            <Link to={"signin"}>
-              <Button title={"Sign In"} />
-            </Link>
+            <>
+              <Link to="/signin">
+                <Button title="Sign In" />
+              </Link>
+            </>
           )}
         </div>
 
+        {/* Right - Mobile Menu Button */}
         <button onClick={() => setIsOpen(!isOpen)} className="p-4 md:hidden">
           {isOpen ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              x="0px"
-              y="0px"
               className="w-6 h-6 dark:text-gray-800"
               viewBox="0 0 50 50"
             >
@@ -62,8 +72,10 @@ const Navbar = () => {
           )}
         </button>
       </div>
+
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute md:hidden left-0 top-0 bg-gray-100">
+        <div className="absolute md:hidden left-0 top-0 w-full bg-gray-100 z-50">
           <SideNavbar />
         </div>
       )}
