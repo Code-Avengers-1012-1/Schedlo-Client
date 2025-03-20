@@ -4,9 +4,12 @@ import useAxios from "../../hooks/useAxios";
 import Swal from "sweetalert2";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { HiArrowsPointingOut } from "react-icons/hi2";
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router";
 
 const Boards = () => {
   const axiosPublic = useAxios();
+  const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -21,7 +24,9 @@ const Boards = () => {
 
   const handleAddBoard = async (e) => {
     e.preventDefault();
-    const newBoard = { title, description };
+    let currentUser = user?.email;
+    const newBoard = { title, description, currentUser };
+    console.log(currentUser);
 
     try {
       await axiosPublic.post("boards", newBoard);
@@ -50,20 +55,21 @@ const Boards = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Delete",
-    }).then( async (result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         axiosPublic.delete(`boards/${id}`);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Deleted Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         boardsRefetch();
       }
     });
-    
   };
 
-  const handleOpenBoard = () => {
-    console.log("opened");
-  };
-
-  console.log("Boards data --> ", boardsData);
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-100">
@@ -71,7 +77,7 @@ const Boards = () => {
         <h1 className="text-2xl font-semibold text-gray-800">Your Boards</h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2 bg-purple-600 text-white font-medium rounded-lg shadow hover:bg-purple-700 transition"
+          className="px-2 md:px-4 py-2 bg-purple-600 text-white font-medium rounded-lg shadow hover:bg-purple-700 transition text-xs md:text-lg"
         >
           + Add Board
         </button>
@@ -88,11 +94,16 @@ const Boards = () => {
               {board.title}
             </h2>
             <p className="text-sm text-gray-500">{board.description}</p>
+            <p className="text-xs text-gray-500">
+              added by:{" "}
+              <span className="text-gray-400">{board?.currentUser}</span>
+            </p>
             <div className="flex gap-2 items-center mt-2 justify-end">
-              <HiArrowsPointingOut
-                className="text-xl text-blue-500 hover:text-gray-400"
-                onClick={handleOpenBoard}
-              />
+              <Link to={`/board/${board?._id}`}>
+                <HiArrowsPointingOut
+                  className="text-xl text-blue-500 hover:text-gray-400"
+                />
+              </Link>
               <RiDeleteBin2Line
                 className="text-xl text-red-500 hover:text-gray-400"
                 onClick={() => handleDelete(board?._id)}
@@ -131,14 +142,14 @@ const Boards = () => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 bg-gray-300 rounded-md"
+                  className="px-2 md:px-4 py-2 text-xs md:text-lg bg-gray-300 rounded-md"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleAddBoard}
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                  className="px-2 md:px-4 py-1 md:py-2 text-xs md:text-lg bg-blue-500 text-white rounded-md"
                 >
                   Add Board
                 </button>
