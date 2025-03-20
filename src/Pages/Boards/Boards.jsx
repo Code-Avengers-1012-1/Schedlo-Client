@@ -6,6 +6,8 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { HiArrowsPointingOut } from "react-icons/hi2";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
+import { GoArrowUpRight } from "react-icons/go";
+import { BiSolidEdit } from "react-icons/bi";
 
 const Boards = () => {
   const axiosPublic = useAxios();
@@ -100,8 +102,13 @@ const Boards = () => {
             </p>
             <div className="flex gap-2 items-center mt-2 justify-end">
               <Link to={`/board/${board?._id}`}>
-                <HiArrowsPointingOut
+                <GoArrowUpRight
                   className="text-xl text-blue-500 hover:text-gray-400"
+                />
+              </Link>
+              <Link to={`/edit/${board?._id}`}>
+                <BiSolidEdit
+                  className="text-xl text-green-500 hover:text-gray-400"
                 />
               </Link>
               <RiDeleteBin2Line
