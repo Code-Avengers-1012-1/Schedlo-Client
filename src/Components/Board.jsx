@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
+import CreateListModal from "./CreateListModal/CreateListModal";
 
 const Board = () => {
   const { id } = useParams();
@@ -23,18 +24,8 @@ const Board = () => {
     <div className="p-6 w-full min-h-screen bg-gray-100">
       {/* Board Header */}
       <div className="flex justify-between items-center mb-6">
-        <div >
-          <h1 className="text-2xl font-semibold text-gray-800">
-            {boardData?.title}
-          </h1>
-          <p className="text-xs">
-            This board added by{" "}
-            <span className="text-gray-500">{boardData?.currentUser}</span>
-          </p>
-        </div>
-        <button className="px-4 py-2 bg-purple-600 text-white font-medium rounded-lg shadow hover:bg-purple-700 transition">
-          + Create List
-        </button>
+        <h1 className="text-2xl font-semibold text-gray-800">Board Title</h1>
+        <CreateListModal />
       </div>
 
       {/* Lists Container */}
