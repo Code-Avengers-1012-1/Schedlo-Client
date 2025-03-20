@@ -1,7 +1,20 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { FiUsers, FiClipboard, FiCalendar, FiLayers } from "react-icons/fi";
+import useAxios from "../../hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 const Dashboard = () => {
+  const axiosPublic = useAxios()
+
+  const {data: boardsData} = useQuery({
+    queryKey: ["boards"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("boards")
+      return res?.data
+    }
+  })
+  
   // Dummy data for user activities
   const stats = [
     { title: "Boards", value: 4, icon: <FiLayers size={28} />, color: "bg-blue-500" },
