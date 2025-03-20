@@ -5,8 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import CreateListModal from "./CreateListModal/CreateListModal";
 
 const Board = () => {
-  const id = useParams();
+  const { id } = useParams();
   const axiosPublic = useAxios();
+
+  console.log("Params id: ", id);
 
   const { data: boardData } = useQuery({
     queryKey: ["board"],
