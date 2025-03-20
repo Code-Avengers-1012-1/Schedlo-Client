@@ -1,15 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const SideNavbar = ({ onClose }) => {
   return (
     <nav className="h-full flex flex-col p-5 bg-white shadow-lg">
-      {/* Close Button */}
+      {/* Title */}
+      <Link to="/" className="text-xl font-bold text-gray-900 ">Time Scheduler</Link>
+
+      {/* Close Button (Only visible on mobile) */}
       <button
         onClick={onClose}
-        className="self-end p-2 text-gray-700 dark:text-gray-200"
-      >
-        ✖
-      </button>
+        className="self-end p-2 text-gray-700 dark:text-gray-200 md:hidden"
+      />
 
       {/* Navigation Links */}
       <ul className="mt-5 space-y-3">

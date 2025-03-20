@@ -7,7 +7,6 @@ const Home = () => {
     <div>
       {/* Banner */}
       <Banner />
-      <p>All Content of home page should be here</p>
     </div>
   );
 };
