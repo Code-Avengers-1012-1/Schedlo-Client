@@ -1,31 +1,29 @@
- 
 import React from "react";
 import { useParams } from "react-router";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
+import CreateListModal from "./CreateListModal/CreateListModal";
 
 const Board = () => {
   const id = useParams();
-  const axiosPublic = useAxios()
+  const axiosPublic = useAxios();
 
-  const {data: boardData} = useQuery({
-    queryKey: ['board'],
+  const { data: boardData } = useQuery({
+    queryKey: ["board"],
     queryFn: async () => {
-        const res = await axiosPublic.get(`/board/${id}`)
-        return res?.data
-    }
-  })
+      const res = await axiosPublic.get(`/board/${id}`);
+      return res?.data;
+    },
+  });
 
-  console.log("Board data: ", boardData)
+  console.log("Board data: ", boardData);
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-100">
       {/* Board Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold text-gray-800">Board Title</h1>
-        <button className="px-4 py-2 bg-purple-600 text-white font-medium rounded-lg shadow hover:bg-purple-700 transition">
-          + Create List
-        </button>
+        <CreateListModal />
       </div>
 
       {/* Lists Container */}
