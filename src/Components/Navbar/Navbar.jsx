@@ -27,9 +27,7 @@ const Navbar = () => {
 
   return (
     <header className="relative bg-white shadow-md dark:bg-gray-900 dark:text-gray-100">
-      <div className="container px-4 py-3 flex justify-between items-center">
-        {/* Left - Add Task Button */}
-        <Button title="Add Task" />
+      <div className="container px-4 py-3 flex justify-end items-center">
 
         {/* Middle - Authentication Buttons */}
         <div className="hidden md:block">

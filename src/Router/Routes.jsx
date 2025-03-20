@@ -10,6 +10,7 @@ import Members from "../Pages/Members/Members";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import Profile from "../Pages/Profile/Profile";
 import Schedules from "../Pages/Schedules/Schedules";
+import Board from "../Components/Board";
 
 const Routers = () => {
   return (
@@ -23,6 +24,7 @@ const Routers = () => {
         <Route path="dashboard" element={<DashBoard />} />
         <Route path="profile" element={<Profile />} />
         <Route path="schedules" element={<Schedules />} />
+        <Route path="board/:id" element={<Board />}></Route>
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>
