@@ -24,7 +24,12 @@ const Board = () => {
     <div className="p-6 w-full min-h-screen bg-gray-100">
       {/* Board Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-gray-800">Board Title</h1>
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-800">
+            {boardData?.title}
+          </h1>
+          <p className="text-xs">Added by: {boardData?.currentUser}</p>
+        </div>
         <CreateListModal />
       </div>
 
