@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import Swal from "sweetalert2";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { HiArrowsPointingOut } from "react-icons/hi2";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
 import { GoArrowUpRight } from "react-icons/go";
