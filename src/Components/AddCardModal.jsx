@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
+ import { useState } from "react";
 import useAxios from "../hooks/useAxios";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
 
 const AddCardModal = ({ listId, closeModal, refetch }) => {
     const axiosPublic = useAxios();
