@@ -1,24 +1,26 @@
 import React from "react";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import CreateListModal from "./CreateListModal/CreateListModal";
+import CardModal from "./CardModal/CardModal";
 
 const Board = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const axiosPublic = useAxios();
 
-  console.log("Params id: ", id);
+  // console.log("Params id: ", id);
 
-  const { data: boardData } = useQuery({
-    queryKey: ["board"],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/board/${id}`);
-      return res?.data;
-    },
-  });
+  // const { data: boardData } = useQuery({
+  //   queryKey: ["board"],
+  //   queryFn: async () => {
+  //     const res = await axiosPublic.get(`/board/${id}`);
+  //     return res?.data;
+  //   },
+  // });
 
   // get createlist form database
+
   const { data: createListName = [], refetch: createListRefetch } = useQuery({
     queryKey: ["createListName"],
     queryFn: async () => {
@@ -26,10 +28,6 @@ const Board = () => {
       return res?.data;
     },
   });
-
-  console.log(createListName);
-
-  console.log("Board data: ", boardData);
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-100">
@@ -56,9 +54,7 @@ const Board = () => {
             <div className="bg-gray-100 p-3 rounded mb-2 shadow-sm">Task 2</div>
 
             {/* Add Card Button */}
-            <button className="mt-3 px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition w-full">
-              + Add Card
-            </button>
+            <CardModal refetch={createListRefetch} cardId={list?._id} />
           </div>
         ))}
       </div>

@@ -70,7 +70,6 @@ const Boards = () => {
     });
   };
 
-
   return (
     <div className="p-6 w-full min-h-screen bg-gray-100">
       <div className="flex justify-between items-center mb-6">
@@ -87,7 +86,7 @@ const Boards = () => {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {boardsData?.map((board) => (
           <div
-            key={board.id}
+            key={board._id}
             className="bg-white p-5 shadow-lg rounded-lg border border-gray-200 hover:shadow-xl transition"
           >
             <h2 className="text-lg font-semibold text-gray-700">
@@ -100,9 +99,7 @@ const Boards = () => {
             </p>
             <div className="flex gap-2 items-center mt-2 justify-end">
               <Link to={`/board/${board?._id}`}>
-                <HiArrowsPointingOut
-                  className="text-xl text-blue-500 hover:text-gray-400"
-                />
+                <HiArrowsPointingOut className="text-xl text-blue-500 hover:text-gray-400" />
               </Link>
               <RiDeleteBin2Line
                 className="text-xl text-red-500 hover:text-gray-400"
