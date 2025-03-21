@@ -34,7 +34,7 @@ const MainLayout = () => {
         </header>
 
         {/* ✅ Page Content (Avoids navbar overlap) */}
-        <main className="pt-16 min-h-screen p-4 bg-white">
+        <main className="pt-16 min-h-screen bg-white">
           <Outlet />
         </main>
 

@@ -11,6 +11,7 @@ import DashBoard from "../Pages/DashBoard/DashBoard";
 import Profile from "../Pages/Profile/Profile";
 import Schedules from "../Pages/Schedules/Schedules";
 import Board from "../Components/Board";
+import PrivateRoute from "./PrivateRoute";
 
 const Routers = () => {
   return (
@@ -19,12 +20,12 @@ const Routers = () => {
         <Route index element={<Home />} />
         <Route path="signin" element={<SinginForm />} />
         <Route path="signup" element={<SignupForm />} />
-        <Route path="boards" element={<Boards />} />
-        <Route path="members" element={<Members />} />
+        <Route path="boards" element={<PrivateRoute><Boards /></PrivateRoute>} />
+        <Route path="members" element={<PrivateRoute><Members /></PrivateRoute>} />
         <Route path="dashboard" element={<DashBoard />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="schedules" element={<Schedules />} />
-        <Route path="board/:id" element={<Board />}></Route>
+        <Route path="schedules" element={<PrivateRoute><Schedules /></PrivateRoute>} />
+        <Route path="board/:id" element={<PrivateRoute><Board /></PrivateRoute>}></Route>
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>

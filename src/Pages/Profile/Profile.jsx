@@ -1,15 +1,9 @@
 import React from "react";
+import useAuth from "../../hooks/useAuth";
 
 const Profile = () => {
-  // Dummy user data
-  const user = {
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Admin",
-    tasksCreated: 12,
-    schedulesCreated: 5,
-    profilePicture: "", // Add image URL here if available
-  };
+  const {user} = useAuth()
+console.log("User", user)
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-100 flex justify-center">
