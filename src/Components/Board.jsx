@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import CreateListModal from "./CreateListModal/CreateListModal";
 import Swal from "sweetalert2";
+import AddCardModal from "./AddCardModal";
 
 const Board = () => {
   const { id } = useParams();
   const axiosPublic = useAxios();
+  const [openCardModal, setOpenCardModal] = useState(false);
+  const [selectedListId, setSelectedListId] = useState(null);
 
   const { data: boardData } = useQuery({
     queryKey: ["board", id],
@@ -17,7 +20,6 @@ const Board = () => {
     },
   });
 
-  // get createlist form database
   const { data: listData, refetch: listRefetch } = useQuery({
     queryKey: ["listData", id],
     queryFn: async () => {
@@ -25,6 +27,15 @@ const Board = () => {
       return res?.data;
     },
   });
+
+  const {data: cardData, refetch: cardRefetch} = useQuery({
+    queryKey: ["cards"],
+    queryFn: async () => {
+        const res = await axiosPublic.get("/cards")
+        cardRefetch()
+        return res?.data
+    }
+})
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -52,7 +63,6 @@ const Board = () => {
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-100">
-      {/* Board Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold text-gray-800">
           {boardData?.title}
@@ -60,8 +70,7 @@ const Board = () => {
         <CreateListModal refetch={listRefetch} boardId={id} />
       </div>
 
-      {/* Lists Container */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {listData?.map((list) => (
           <div
             key={list._id}
@@ -71,11 +80,10 @@ const Board = () => {
               {list?.listName}
             </h2>
 
-            {/* Cards inside the list */}
-            <div className="bg-gray-100 p-3 rounded mb-2 shadow-sm">Task 1</div>
-            <div className="bg-gray-100 p-3 rounded mb-2 shadow-sm">Task 2</div>
+            {
+              cardData?.map((card, i) => <div key={i} className="bg-gray-100 p-3 rounded mb-2 shadow-sm">{card?.title}</div>)
+            }
 
-            {/* Buttons */}
             <button
               onClick={() => handleDelete(list?._id)}
               className="mt-3 px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition w-full"
@@ -83,12 +91,26 @@ const Board = () => {
               Delete
             </button>
 
-            <button className="mt-3 px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition w-full">
+            <button
+              onClick={() => {
+                setSelectedListId(list._id);
+                setOpenCardModal(true);
+              }}
+              className="mt-3 px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition w-full"
+            >
               + Add Card
             </button>
           </div>
         ))}
       </div>
+
+      {openCardModal && (
+        <AddCardModal
+          listId={selectedListId}
+          closeModal={() => setOpenCardModal(false)}
+          refetch={listRefetch}
+        />
+      )}
     </div>
   );
 };
