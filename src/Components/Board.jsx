@@ -35,13 +35,12 @@ const Board = () => {
     <div className="p-6 w-full min-h-screen bg-gray-100">
       {/* Board Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-gray-800">Board Title</h1>
-        <CreateListModal refetch={createListRefetch} />
+        <h1 className="text-2xl font-semibold text-gray-800">{boardData?.title}</h1>
+        <CreateListModal refetch={createListRefetch} boardId={id} />
       </div>
 
       {/* Lists Container */}
-      <div className="flex gap-6 overflow-x-auto">
-        {/* Sample List */}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 ">
         {createListName.map((list) => (
           <div
             key={list._id}
