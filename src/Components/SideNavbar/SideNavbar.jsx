@@ -4,7 +4,12 @@ const SideNavbar = ({ onClose }) => {
   return (
     <nav className="h-full flex flex-col p-5 bg-white shadow-lg">
       {/* Title */}
-      <Link to="/" className="text-xl font-bold text-gray-900 ">Time Scheduler</Link>
+      <Link
+        to="/"
+        className="text-xl font-bold text-white bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-lg shadow-md hover:shadow-lg transition-all"
+      >
+        ⏳ Schedlo
+      </Link>
 
       {/* Close Button (Only visible on mobile) */}
       <button
@@ -19,7 +24,9 @@ const SideNavbar = ({ onClose }) => {
             to="/dashboard"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-md ${
-                isActive ? "bg-gray-200 text-black" : "text-gray-800 hover:bg-gray-300"
+                isActive
+                  ? "bg-gray-200 text-black"
+                  : "text-gray-800 hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -32,7 +39,9 @@ const SideNavbar = ({ onClose }) => {
             to="/boards"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-md ${
-                isActive ? "bg-gray-200 text-black" : "text-gray-800 hover:bg-gray-300"
+                isActive
+                  ? "bg-gray-200 text-black"
+                  : "text-gray-800 hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -45,7 +54,9 @@ const SideNavbar = ({ onClose }) => {
             to="/schedules"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-md ${
-                isActive ? "bg-gray-200 text-black" : "text-gray-800 hover:bg-gray-300"
+                isActive
+                  ? "bg-gray-200 text-black"
+                  : "text-gray-800 hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -58,7 +69,9 @@ const SideNavbar = ({ onClose }) => {
             to="/members"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-md ${
-                isActive ? "bg-gray-200 text-black" : "text-gray-800 hover:bg-gray-300"
+                isActive
+                  ? "bg-gray-200 text-black"
+                  : "text-gray-800 hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -71,7 +84,9 @@ const SideNavbar = ({ onClose }) => {
             to="/profile"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-md ${
-                isActive ? "bg-gray-200 text-black" : "text-gray-800 hover:bg-gray-300"
+                isActive
+                  ? "bg-gray-200 text-black"
+                  : "text-gray-800 hover:bg-gray-300"
               }`
             }
             onClick={onClose}
