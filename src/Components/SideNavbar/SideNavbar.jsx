@@ -8,7 +8,7 @@ const SideNavbar = ({ onClose }) => {
         to="/"
         className="text-xl font-bold text-white bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-lg shadow-md hover:shadow-lg transition-all"
       >
-        ⏳ Time Scheduler
+        ⏳ Schedlo
       </Link>
 
       {/* Close Button (Only visible on mobile) */}
