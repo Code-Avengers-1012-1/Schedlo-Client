@@ -5,9 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import CreateListModal from "./CreateListModal/CreateListModal";
 import Swal from "sweetalert2";
 import AddCardModal from "./AddCardModal";
+import useAuth from "../hooks/useAuth";
 
 const Board = () => {
   const { id } = useParams();
+  const {user} = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [isListLoading, setIsListLoading] = useState(true);
   const axiosPublic = useAxios();
@@ -82,7 +84,7 @@ const Board = () => {
 
           {isListLoading ? (
             <div>List data coming soon</div>
-          ) : (
+          ) : listData?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {listData?.map((list) => (
                 <div
@@ -143,6 +145,11 @@ const Board = () => {
                 </div>
               ))}
             </div>
+          ) : (
+            <p className="text-red-400">
+              No list added by
+              <span className="text-gray-500 text-xs">{user?.email}</span>
+            </p>
           )}
 
           {openCardModal && (

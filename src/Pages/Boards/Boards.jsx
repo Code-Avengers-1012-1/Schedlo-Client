@@ -19,7 +19,7 @@ const Boards = () => {
   const { data: boardsData, refetch: boardsRefetch } = useQuery({
     queryKey: ["boards"],
     queryFn: async () => {
-      const res = await axiosPublic.get("boards");
+      const res = await axiosPublic.get(`boards?email=${user?.email}`);
       setIsLoading(false);
       return res?.data;
     },
@@ -88,7 +88,7 @@ const Boards = () => {
       {/* Boards Grid */}
       {isLoading ? (
         <div>Please Wait...</div>
-      ) : (
+      ) : boardsData?.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {boardsData?.map((board) => (
             <div
@@ -118,6 +118,8 @@ const Boards = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <p className="text-red-400">No board added by <span className="text-gray-500 text-xs">{user?.email}</span></p>
       )}
 
       {isModalOpen && (
