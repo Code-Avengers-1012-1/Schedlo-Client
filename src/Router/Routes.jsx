@@ -7,9 +7,11 @@ import SignupForm from "../Pages/SignUp/SignupForm";
 import SinginForm from "../Pages/SignIn/SinginForm";
 import Boards from "../Pages/Boards/Boards";
 import Members from "../Pages/Members/Members";
-import DashBord from "../Pages/DashBord/DashBord";
+import DashBoard from "../Pages/DashBoard/DashBoard";
 import Profile from "../Pages/Profile/Profile";
-import WorkSpace from "../Pages/WorkSpace/WorkSpace";
+import Schedules from "../Pages/Schedules/Schedules";
+import Board from "../Components/Board";
+import PrivateRoute from "./PrivateRoute";
 
 const Routers = () => {
   return (
@@ -18,11 +20,12 @@ const Routers = () => {
         <Route index element={<Home />} />
         <Route path="signin" element={<SinginForm />} />
         <Route path="signup" element={<SignupForm />} />
-        <Route path="boards" element={<Boards />} />
-        <Route path="members" element={<Members />} />
-        <Route path="dashboard" element={<DashBord />} />
+        <Route path="boards" element={<PrivateRoute><Boards /></PrivateRoute>} />
+        <Route path="members" element={<PrivateRoute><Members /></PrivateRoute>} />
+        <Route path="dashboard" element={<DashBoard />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="workspace" element={<WorkSpace />} />
+        <Route path="schedules" element={<PrivateRoute><Schedules /></PrivateRoute>} />
+        <Route path="board/:id" element={<PrivateRoute><Board /></PrivateRoute>}></Route>
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>

@@ -1,41 +1,67 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../auth/AuthProvider";
 
-const SinginForm = () => {
+const SigninForm = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const { signInWithGoogle } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
-    agreeTerms: false,
-    agreeUpdates: false,
   });
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-
-    signIn(formData?.email, formData?.password)
+    signIn(formData.email, formData.password)
       .then((userCredential) => {
         console.log("Logged In -->", userCredential?.user);
-        navigate('/')
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         console.log("ERR: ", err);
       });
   };
+
+  const handleGoogleLogin = () => {
+    console.log("Google Sign-In Button Clicked");
+    
+    if (!signInWithGoogle) {
+      console.error("signInWithGoogle is not defined in AuthContext.");
+      return;
+    }
+  
+    signInWithGoogle()
+      .then((result) => {
+        console.log("Google Sign-In Success:", result.user);
+        Swal.fire({
+          title: `Welcome, ${result.user.displayName || result.user.email}!`,
+          text: "You've logged in successfully.",
+          icon: "success",
+          confirmButtonText: "Okay",
+        });
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.error("Google Sign-In Error:", error.message);
+        alert(error.message);
+      });
+  };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -51,9 +77,18 @@ const SinginForm = () => {
           <button className="p-3 bg-gray-200 rounded-lg">
             <FaGithub size={24} />
           </button>
-          <button className="p-3 bg-gray-200 rounded-lg">
-            <FaGoogle size={24} />
-          </button>
+          <button
+  type="button"
+  onClick={(e) => {
+    e.preventDefault(); // Prevent unexpected form submission issues
+    handleGoogleLogin();
+  }}
+  className="p-3 bg-gray-200 rounded-lg"
+>
+  <FaGoogle size={24} />
+</button>
+
+         
         </div>
 
         <p className="text-center text-gray-600 mb-4">
@@ -85,10 +120,16 @@ const SinginForm = () => {
             Log in
           </button>
         </form>
-        <p>New Here? <Link to="/signup">Sign Up</Link></p>
+
+        <p className="text-center mt-4">
+          New here?{" "}
+          <Link to="/signup" className="text-violet-600 hover:underline">
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );
 };
 
-export default SinginForm;
+export default SigninForm;

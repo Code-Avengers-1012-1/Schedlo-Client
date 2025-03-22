@@ -29,12 +29,12 @@ const MainLayout = () => {
       {/* ✅ Main Content Area */}
       <div className="flex-1 md:ml-64">
         {/* ✅ Navbar with Sidebar Toggle Button */}
-        <header className="fixed w-full z-20 bg-white shadow-md">
+        <header className="fixed w-full md:w-[83%] z-20 bg-white shadow-md">
           <Navbar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
         </header>
 
         {/* ✅ Page Content (Avoids navbar overlap) */}
-        <main className="pt-16 min-h-screen p-4 bg-white">
+        <main className="pt-16 min-h-screen bg-white">
           <Outlet />
         </main>
 
