@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import useAxios from "../hooks/useAxios";
@@ -38,7 +39,6 @@ const Board = () => {
     queryKey: ["cards"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/cards`);
-      cardRefetch();
       return res?.data;
     },
   });
@@ -128,7 +128,7 @@ const Board = () => {
 
                   <button
                     onClick={() => handleDelete(list?._id)}
-                    className="mt-3 px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition w-full"
+                    className="mt-3 px-3 py-1 bg-red-400 text-white text-sm rounded hover:bg-red-500 transition w-full"
                   >
                     Delete
                   </button>
@@ -138,7 +138,7 @@ const Board = () => {
                       setSelectedListId(list._id);
                       setOpenCardModal(true);
                     }}
-                    className="mt-3 px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition w-full"
+                    className="mt-3 px-3 py-1 bg-blue-400 text-white text-sm rounded hover:bg-blue-500 transition w-full"
                   >
                     + Add Card
                   </button>
@@ -156,7 +156,7 @@ const Board = () => {
             <AddCardModal
               listId={selectedListId}
               closeModal={() => setOpenCardModal(false)}
-              refetch={listRefetch}
+              refetch={cardRefetch}
             />
           )}
         </div>

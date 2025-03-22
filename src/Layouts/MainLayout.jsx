@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar/Navbar";
 import { Outlet } from "react-router";
-import Footer from "../Components/Footer/Footer";
 import SideNavbar from "../Components/SideNavbar/SideNavbar";
 
 const MainLayout = () => {
@@ -34,14 +33,10 @@ const MainLayout = () => {
         </header>
 
         {/* ✅ Page Content (Avoids navbar overlap) */}
-        <main className="pt-16 min-h-screen bg-white">
+        <main className="pt-16 bg-white">
           <Outlet />
         </main>
 
-        {/* ✅ Footer */}
-        <footer className="bg-gray-100 p-4">
-          <Footer />
-        </footer>
       </div>
     </div>
   );
