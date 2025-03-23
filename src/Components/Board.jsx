@@ -37,7 +37,7 @@ const Board = () => {
   const { data: cardData, refetch: cardRefetch } = useQuery({
     queryKey: ["cards"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/cards`);
+      const res = await axiosPublic.get(`cards?email=${user?.email}`);
       return res?.data;
     },
   });

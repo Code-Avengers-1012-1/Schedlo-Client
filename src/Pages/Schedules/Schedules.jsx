@@ -6,6 +6,7 @@ import moment from "moment";
 import { Link } from "react-router";
 import { RiDeleteBin3Line } from "react-icons/ri";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const Schedules = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +14,8 @@ const Schedules = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const axiosPublic = useAxios();
+  const {user} = useAuth();
+  const userEmail = user?.email;
 
   const {
     data: scheduleData,
@@ -22,7 +25,7 @@ const Schedules = () => {
   } = useQuery({
     queryKey: ["schedules"],
     queryFn: async () => {
-      const res = await axiosPublic.get("schedules");
+      const res = await axiosPublic.get(`schedules?email=${userEmail}`);
       return res?.data;
     },
   });
@@ -45,11 +48,11 @@ const Schedules = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Schedule Details:", { title, date, time });
+    e.preventDefault()
+    console.log("Schedule Details:", { title, date, time});
 
     axiosPublic
-      .post("/schedules", { title, date, time })
+      .post("/schedules", { title, date, time, userEmail })
       .then((res) => {
         console.log("schedules api response --> ", res?.data);
         scheduleRefetch();
@@ -101,6 +104,7 @@ const Schedules = () => {
             <p className="text-sm text-gray-500 mt-2">
               {moment(schedule?.date).subtract(10, "days").calendar()}
             </p>
+            <p className="text-xs text-gray-500">schedule created by: {schedule?.userEmail}</p>
             <div className="flex justify-between items-center">
               <p className="text-md font-medium text-gray-700 mt-1">
                 {schedule?.time}

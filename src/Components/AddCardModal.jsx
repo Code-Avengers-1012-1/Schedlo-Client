@@ -1,12 +1,15 @@
  import { useState } from "react";
 import useAxios from "../hooks/useAxios";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 const AddCardModal = ({ listId, closeModal, refetch }) => {
     const axiosPublic = useAxios();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [error, setError] = useState("");
+    const {user} = useAuth();
+    const userEmail = user?.email;
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -17,7 +20,7 @@ const AddCardModal = ({ listId, closeModal, refetch }) => {
       }
   
       try {
-        await axiosPublic.post("addCard", { title, description, listId });
+        await axiosPublic.post("addCard", { title, description, listId, userEmail });
         Swal.fire({
           position: "top-end",
           icon: "success",

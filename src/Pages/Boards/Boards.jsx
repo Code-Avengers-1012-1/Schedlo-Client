@@ -60,14 +60,7 @@ const Boards = () => {
       confirmButtonText: "Delete",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`boards/${id}`);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Deleted Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        await axiosPublic.delete(`boards/${id}`);
         boardsRefetch();
       }
     });
