@@ -28,13 +28,10 @@ const Navbar = () => {
   return (
     <header className="relative bg-white shadow-md dark:bg-gray-900 dark:text-gray-100">
       <div className="container px-4 py-3 flex justify-end items-center">
-
         {/* Middle - Authentication Buttons */}
         <div className="hidden md:block">
           {user ? (
-            <button onClick={handleSignOut}>
-              <Button title="Sign Out" />
-            </button>
+            <Button onClick={handleSignOut} title="Sign Out" />
           ) : (
             <Link to="/signin">
               <Button title="Sign In" />
@@ -45,12 +42,27 @@ const Navbar = () => {
         {/* Right - Mobile Sidebar Toggle Button */}
         <button onClick={() => setIsOpen(!isOpen)} className="p-3 md:hidden">
           {isOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 50 50">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              viewBox="0 0 50 50"
+            >
               <path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path>
             </svg>
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
             </svg>
           )}
         </button>
@@ -67,7 +79,10 @@ const Navbar = () => {
 
       {/* Overlay when sidebar is open */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black opacity-50 md:hidden" onClick={() => setIsOpen(false)}></div>
+        <div
+          className="fixed inset-0 bg-black opacity-50 md:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
       )}
     </header>
   );

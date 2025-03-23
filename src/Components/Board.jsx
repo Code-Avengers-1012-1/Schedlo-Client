@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import CreateListModal from "./CreateListModal/CreateListModal";
 import Swal from "sweetalert2";
 import AddCardModal from "./AddCardModal";
+import { MdDelete } from "react-icons/md";
 
 const Board = () => {
   const { id } = useParams();
@@ -28,14 +29,14 @@ const Board = () => {
     },
   });
 
-  const {data: cardData, refetch: cardRefetch} = useQuery({
+  const { data: cardData, refetch: cardRefetch } = useQuery({
     queryKey: ["cards"],
     queryFn: async () => {
-        const res = await axiosPublic.get(`/cards`)
-        cardRefetch()
-        return res?.data
-    }
-})
+      const res = await axiosPublic.get(`/cards`);
+      cardRefetch();
+      return res?.data;
+    },
+  });
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -48,7 +49,7 @@ const Board = () => {
       confirmButtonText: "Delete",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`list/${id}`);
+        await axiosPublic.delete(`list/${id}`);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -56,8 +57,32 @@ const Board = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        listRefetch();
       }
+      listRefetch();
+    });
+  };
+
+  const handleTaskRemove = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axiosPublic.delete(`/cards/${id}`);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Deleted Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      cardRefetch();
     });
   };
 
@@ -80,9 +105,20 @@ const Board = () => {
               {list?.listName}
             </h2>
 
-            {
-              cardData?.map((card, i) => <div key={i} className="bg-gray-100 p-3 rounded mb-2 shadow-sm">{card?.title}</div>)
-            }
+            {cardData?.map((card, i) => (
+              <div key={i}>
+                {list._id === card?.listId ? (
+                  <div className="bg-gray-100 p-3 flex justify-between items-center rounded mb-2 shadow-sm">
+                    <h3>{card?.title}</h3>
+                    <button onClick={() => handleTaskRemove(card?._id)}>
+                      <MdDelete className="text-red-500 text-[1.4rem] hover:text-red-700" />
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            ))}
 
             <button
               onClick={() => handleDelete(list?._id)}
@@ -108,7 +144,7 @@ const Board = () => {
         <AddCardModal
           listId={selectedListId}
           closeModal={() => setOpenCardModal(false)}
-          refetch={listRefetch}
+          refetch={cardRefetch}
         />
       )}
     </div>
