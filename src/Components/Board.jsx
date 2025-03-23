@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import { useParams } from "react-router";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
@@ -54,14 +53,7 @@ const Board = () => {
       confirmButtonText: "Delete",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`list/${id}`);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Deleted Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        await axiosPublic.delete(`list/${id}`);
         listRefetch();
       }
     });
