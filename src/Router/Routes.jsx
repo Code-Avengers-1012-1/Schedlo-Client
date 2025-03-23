@@ -22,8 +22,8 @@ const Routers = () => {
         <Route path="signup" element={<SignupForm />} />
         <Route path="boards" element={<PrivateRoute><Boards /></PrivateRoute>} />
         <Route path="members" element={<PrivateRoute><Members /></PrivateRoute>} />
-        <Route path="dashboard" element={<DashBoard />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="dashboard" element={<PrivateRoute><DashBoard /></PrivateRoute>} />
+        <Route path="profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path="schedules" element={<PrivateRoute><Schedules /></PrivateRoute>} />
         <Route path="board/:id" element={<PrivateRoute><Board /></PrivateRoute>}></Route>
       </Route>

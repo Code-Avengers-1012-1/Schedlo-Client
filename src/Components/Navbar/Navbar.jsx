@@ -37,7 +37,7 @@ const Navbar = () => {
               <span className="text-gray-700 dark:text-white">{user.displayName || "User"}</span>
             </Link>
           ) : (
-            <Link to="/signin">
+            <Link to="/signin" className="bg-white rounded-md">
               <Button title="Sign In" />
             </Link>
           )}
