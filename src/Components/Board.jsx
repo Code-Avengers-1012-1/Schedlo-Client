@@ -1,4 +1,4 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
@@ -6,6 +6,8 @@ import CreateListModal from "./CreateListModal/CreateListModal";
 import Swal from "sweetalert2";
 import AddCardModal from "./AddCardModal";
 import useAuth from "../hooks/useAuth";
+import { FaDeleteLeft } from "react-icons/fa6";
+import { RxCross1 } from "react-icons/rx";
 
 const Board = () => {
   const { id } = useParams();
@@ -59,6 +61,23 @@ const Board = () => {
     });
   };
 
+  const handleDeleteCard = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axiosPublic.delete(`card/${id}`);
+        cardRefetch();
+      }
+    });
+  };
+
   return (
     <>
       {isLoading ? (
@@ -83,9 +102,14 @@ const Board = () => {
                   key={list._id}
                   className="bg-white p-4 shadow-lg rounded-lg border border-gray-200 w-64 min-w-[250px]"
                 >
-                  <h2 className="text-lg font-semibold text-gray-700 mb-3">
-                    {list?.listName}
-                  </h2>
+                  <div className="flex justify-between items-center pb-2 ">
+                    <h2 className="text-lg font-semibold text-gray-700">
+                      {list?.listName}
+                    </h2>
+                    <button onClick={() => handleDelete(list?._id)}>
+                      <RxCross1 className="hover:text-red-500"/>
+                    </button>
+                  </div>
 
                   <div>
                     {cardData?.map((card, i) => (
@@ -93,7 +117,7 @@ const Board = () => {
                         {list._id === card?.listId ? (
                           <div
                             key={i}
-                            className={`bg-gray-100 p-3 rounded mb-2 shadow-sm flex items-start gap-2 ${
+                            className={`bg-gray-100 p-4 rounded-lg shadow-sm flex items-start gap-3 ${
                               card?.completed ? "opacity-50" : ""
                             }`}
                           >
@@ -102,17 +126,25 @@ const Board = () => {
                               checked={card?.completed}
                               className="mt-1 cursor-pointer"
                             />
-                            <div>
-                              <h2
-                                className={`${
-                                  card?.completed
-                                    ? "line-through text-gray-400"
-                                    : ""
-                                }`}
-                              >
-                                {card?.title}
-                              </h2>
-                              <p className="text-xs text-gray-500">
+                            <div className="flex-1">
+                              <div className="flex justify-between items-center mb-1">
+                                <h2
+                                  className={`${
+                                    card?.completed
+                                      ? "line-through text-gray-400"
+                                      : "text-gray-800"
+                                  } font-semibold`}
+                                >
+                                  {card?.title}
+                                </h2>
+                                <button
+                                  onClick={() => handleDeleteCard(card?._id)}
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  <FaDeleteLeft size={18} />
+                                </button>
+                              </div>
+                              <p className="text-xs text-gray-600">
                                 {card?.description}
                               </p>
                             </div>
@@ -123,13 +155,6 @@ const Board = () => {
                       </>
                     ))}
                   </div>
-
-                  <button
-                    onClick={() => handleDelete(list?._id)}
-                    className="mt-3 px-3 py-1 bg-red-400 text-white text-sm rounded hover:bg-red-500 transition w-full"
-                  >
-                    Delete
-                  </button>
 
                   <button
                     onClick={() => {
