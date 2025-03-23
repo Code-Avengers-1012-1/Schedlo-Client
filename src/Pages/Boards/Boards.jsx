@@ -92,7 +92,7 @@ const Boards = () => {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {boardsData?.map((board) => (
             <div
-              key={board.id}
+              key={board._id}
               className="bg-white p-5 shadow-lg rounded-lg border border-gray-200 hover:shadow-xl transition"
             >
               <h2 className="text-lg font-semibold text-gray-700">
@@ -119,7 +119,10 @@ const Boards = () => {
           ))}
         </div>
       ) : (
-        <p className="text-red-400">No board added by <span className="text-gray-500 text-xs">{user?.email}</span></p>
+        <p className="text-red-400">
+          No board added by{" "}
+          <span className="text-gray-500 text-xs">{user?.email}</span>
+        </p>
       )}
 
       {isModalOpen && (

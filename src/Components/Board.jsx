@@ -10,7 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const Board = () => {
   const { id } = useParams();
-  const {user} = useAuth();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [isListLoading, setIsListLoading] = useState(true);
   const axiosPublic = useAxios();
@@ -97,32 +97,38 @@ const Board = () => {
 
                   <div>
                     {cardData?.map((card, i) => (
-                      <div
-                        key={i}
-                        className={`bg-gray-100 p-3 rounded mb-2 shadow-sm flex items-start gap-2 ${
-                          card?.completed ? "opacity-50" : ""
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={card?.completed}
-                          className="mt-1 cursor-pointer"
-                        />
-                        <div>
-                          <h2
-                            className={`${
-                              card?.completed
-                                ? "line-through text-gray-400"
-                                : ""
+                      <>
+                        {list._id === card?.listId ? (
+                          <div
+                            key={i}
+                            className={`bg-gray-100 p-3 rounded mb-2 shadow-sm flex items-start gap-2 ${
+                              card?.completed ? "opacity-50" : ""
                             }`}
                           >
-                            {card?.title}
-                          </h2>
-                          <p className="text-xs text-gray-500">
-                            {card?.description}
-                          </p>
-                        </div>
-                      </div>
+                            <input
+                              type="checkbox"
+                              checked={card?.completed}
+                              className="mt-1 cursor-pointer"
+                            />
+                            <div>
+                              <h2
+                                className={`${
+                                  card?.completed
+                                    ? "line-through text-gray-400"
+                                    : ""
+                                }`}
+                              >
+                                {card?.title}
+                              </h2>
+                              <p className="text-xs text-gray-500">
+                                {card?.description}
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </>
                     ))}
                   </div>
 
