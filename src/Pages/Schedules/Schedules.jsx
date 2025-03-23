@@ -1,10 +1,40 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import useAxios from "../../hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
+import moment from "moment";
+import { Link } from "react-router";
+import { RiDeleteBin3Line } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 const Schedules = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const axiosPublic = useAxios();
+
+  const {
+    data: scheduleData,
+    refetch: scheduleRefetch,
+    isPending,
+    error,
+  } = useQuery({
+    queryKey: ["schedules"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("schedules");
+      return res?.data;
+    },
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error)
+    return (
+      <p className="text-red-500 p-5">
+        An error has occurred: + {error.message}
+      </p>
+    );
 
   const handleMakeSchedule = () => {
     setIsModalOpen(true);
@@ -17,7 +47,34 @@ const Schedules = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Schedule Details:", { title, date, time });
+
+    axiosPublic
+      .post("/schedules", { title, date, time })
+      .then((res) => {
+        console.log("schedules api response --> ", res?.data);
+        scheduleRefetch();
+      })
+      .catch((err) => {
+        console.log("schedules api err --> ", err);
+      });
     setIsModalOpen(false);
+  };
+
+  const handleRemove = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "delete",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axiosPublic.delete(`schedule/${id}`);
+        scheduleRefetch();
+      }
+    });
   };
 
   return (
@@ -33,6 +90,30 @@ const Schedules = () => {
         >
           Make a Schedule
         </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
+        {scheduleData?.map((schedule, i) => (
+          <div className="bg-white p-6 shadow-lg rounded-lg border border-gray-200">
+            <h1 className="text-lg font-bold text-gray-800">
+              {schedule?.title}
+            </h1>
+            <p className="text-sm text-gray-500 mt-2">
+              {moment(schedule?.date).subtract(10, "days").calendar()}
+            </p>
+            <div className="flex justify-between items-center">
+              <p className="text-md font-medium text-gray-700 mt-1">
+                {schedule?.time}
+              </p>
+              <button
+                onClick={() => handleRemove(schedule?._id)}
+                className="text-red-400"
+              >
+                <RiDeleteBin3Line />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {isModalOpen && (
