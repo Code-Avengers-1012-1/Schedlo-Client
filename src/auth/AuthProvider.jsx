@@ -1,12 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
-import {
+import { 
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  GithubAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  FacebookAuthProvider,
 } from "firebase/auth";
+
 import React, { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 
@@ -45,6 +48,37 @@ const AuthProvider = ({ children }) => {
         });
     };
     
+    const signInWithGithub = () => {
+      setLoading(true);
+      const githubProvider = new GithubAuthProvider(); // Create an instance
+      return signInWithPopup(auth, githubProvider) // Pass the instance
+        .then((result) => {
+          setUser(result.user);
+          setLoading(false);
+          return result;
+        })
+        .catch((error) => {
+          setLoading(false);
+          throw error;
+        });
+    };
+
+    const signInWithFacebook = () => {
+      setLoading(true);
+      const facebookProvider = new FacebookAuthProvider(); // Create an instance
+    
+      return signInWithPopup(auth, facebookProvider)
+        .then((result) => {
+          setUser(result.user);
+          setLoading(false);
+          return result;
+        })
+        .catch((error) => {
+          setLoading(false);
+          throw error;
+        });
+    };
+    
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -62,7 +96,17 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const authInfo = { signUp, signIn, user, logOut, signInWithGoogle, loading };
+  const authInfo = { 
+    signUp, 
+    signIn, 
+    user, 
+    logOut, 
+    signInWithGoogle, 
+    signInWithGithub, 
+    loading,
+    signInWithFacebook 
+  };
+  
 
   return (
     <div>
