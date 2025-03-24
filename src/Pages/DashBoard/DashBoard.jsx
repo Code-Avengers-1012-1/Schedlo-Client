@@ -4,6 +4,7 @@ import { FiUsers, FiClipboard, FiCalendar, FiLayers } from "react-icons/fi";
 import useAxios from "../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router";
 
 const Dashboard = () => {
   const axiosPublic = useAxios();
@@ -40,27 +41,27 @@ const Dashboard = () => {
 
       {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="flex items-center p-5 bg-white text-gray-800 rounded-lg shadow-md">
+        <Link to="/boards" className="flex items-center p-5 bg-white text-gray-800 rounded-lg shadow-md">
           <div className="text-blue-600 text-3xl mr-4"><FiLayers /></div>
           <div>
             <h2 className="text-2xl font-semibold">{boardsData.length}</h2>
             <p className="text-sm text-gray-500">Total Boards</p>
           </div>
-        </div>
-        <div className="flex items-center p-5 bg-white text-gray-800 rounded-lg shadow-md">
+        </Link>
+        <Link to="/schedules" className="flex items-center p-5 bg-white text-gray-800 rounded-lg shadow-md">
           <div className="text-blue-600 text-3xl mr-4"><FiCalendar /></div>
           <div>
             <h2 className="text-2xl font-semibold">{scheduleData.length}</h2>
             <p className="text-sm text-gray-500">Total Schedules</p>
           </div>
-        </div>
-        <div className="flex items-center p-5 bg-white text-gray-800 rounded-lg shadow-md">
+        </Link>
+        <Link className="flex items-center p-5 bg-white text-gray-800 rounded-lg shadow-md">
           <div className="text-blue-600 text-3xl mr-4"><FiClipboard /></div>
           <div>
             <h2 className="text-2xl font-semibold">{taskData?.length}</h2>
             <p className="text-sm text-gray-500">Total Tasks</p>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

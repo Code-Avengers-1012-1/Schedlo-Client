@@ -97,7 +97,7 @@ const Schedules = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
         {scheduleData?.map((schedule, i) => (
-          <div className="bg-white p-6 shadow-lg rounded-lg border border-gray-200">
+          <div className="bg-[#F4F2EE] p-6 shadow-lg rounded-lg border border-gray-200">
             <h1 className="text-lg font-bold text-gray-800">
               {schedule?.title}
             </h1>

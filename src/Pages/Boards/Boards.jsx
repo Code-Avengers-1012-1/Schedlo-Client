@@ -82,13 +82,13 @@ const Boards = () => {
       {isLoading ? (
         <div>Please Wait...</div>
       ) : boardsData?.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6">
           {boardsData?.map((board) => (
             <div
               key={board._id}
-              className="bg-white p-5 shadow-lg rounded-lg border border-gray-200 hover:shadow-xl transition"
+              className="bg-[#F4F2EE] p-5 shadow-lg rounded-lg hover:scale-102 transform duration-300 transition"
             >
-              <h2 className="text-lg font-semibold text-gray-700">
+              <h2 className="text-lg font-semibold text-gray-800">
                 {board.title}
               </h2>
               <p className="text-sm text-gray-500">{board.description}</p>
@@ -98,7 +98,7 @@ const Boards = () => {
               </p>
               <div className="flex gap-2 items-center mt-2 justify-end">
                 <Link to={`/board/${board?._id}`}>
-                  <GoArrowUpRight className="text-xl text-blue-500 hover:text-gray-400" />
+                  <button className="btn btn-neutral">view board</button>{" "}
                 </Link>
                 <Link to={`/edit/${board?._id}`}>
                   <BiSolidEdit className="text-xl text-green-500 hover:text-gray-400" />

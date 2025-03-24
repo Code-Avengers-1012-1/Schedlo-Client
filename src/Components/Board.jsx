@@ -6,7 +6,7 @@ import CreateListModal from "./CreateListModal/CreateListModal";
 import Swal from "sweetalert2";
 import AddCardModal from "./AddCardModal";
 import useAuth from "../hooks/useAuth";
-import { FaDeleteLeft } from "react-icons/fa6";
+import { MdDeleteForever } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 
 const Board = () => {
@@ -139,9 +139,9 @@ const Board = () => {
                                 </h2>
                                 <button
                                   onClick={() => handleDeleteCard(card?._id)}
-                                  className="text-red-500 hover:text-red-700"
+                                  className="hover:text-red-700 hover:cursor-pointer"
                                 >
-                                  <FaDeleteLeft size={18} />
+                                  <MdDeleteForever />
                                 </button>
                               </div>
                               <p className="text-xs text-gray-600">
