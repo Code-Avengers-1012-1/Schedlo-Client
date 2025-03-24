@@ -34,8 +34,10 @@ const Profile = () => {
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full"
               />
+            ) : user?.displayName ? (
+              user.displayName.charAt(0)
             ) : (
-              user?.displayName ? user.displayName.charAt(0) : "U"
+              "U"
             )}
           </div>
 
@@ -44,7 +46,9 @@ const Profile = () => {
             <h2 className="text-2xl font-semibold text-gray-800">
               {user?.displayName || "Unknown User"}
             </h2>
-            <p className="text-sm text-gray-500">{user?.email || "No email available"}</p>
+            <p className="text-sm text-gray-500">
+              {user?.email || "No email available"}
+            </p>
             <span className="text-xs font-semibold text-white bg-purple-600 px-3 py-1 rounded-full">
               {user?.role || "No Role"}
             </span>
@@ -54,11 +58,15 @@ const Profile = () => {
         {/* User Activities */}
         <div className="mt-6 grid grid-cols-2 gap-4">
           <div className="bg-blue-100 p-4 rounded-lg flex flex-col items-center">
-            <h3 className="text-lg font-semibold text-blue-700">{user?.tasksCreated || 0}</h3>
+            <h3 className="text-lg font-semibold text-blue-700">
+              {user?.tasksCreated || 0}
+            </h3>
             <p className="text-sm text-blue-500">Tasks Created</p>
           </div>
           <div className="bg-green-100 p-4 rounded-lg flex flex-col items-center">
-            <h3 className="text-lg font-semibold text-green-700">{user?.schedulesCreated || 0}</h3>
+            <h3 className="text-lg font-semibold text-green-700">
+              {user?.schedulesCreated || 0}
+            </h3>
             <p className="text-sm text-green-500">Schedules Created</p>
           </div>
         </div>
@@ -68,7 +76,10 @@ const Profile = () => {
           <button className="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg shadow hover:bg-blue-600 transition">
             Edit Profile
           </button>
-          <button onClick={handleSignOut} className="px-4 py-2 bg-red-500 text-white font-medium rounded-lg shadow hover:bg-red-600 transition">
+          <button
+            onClick={handleSignOut}
+            className="px-4 py-2 bg-red-500 text-white font-medium rounded-lg shadow hover:bg-red-600 transition"
+          >
             Logout
           </button>
         </div>

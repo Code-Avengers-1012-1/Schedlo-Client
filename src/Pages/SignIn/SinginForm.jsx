@@ -1,16 +1,17 @@
-import { useContext, useState } from "react";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../auth/AuthProvider";
+import GoogleLogin from "../../Components/SocialLogin/GoogleLogin";
+import FaceboolLogin from "../../Components/SocialLogin/FaceboolLogin";
+import GithubLogin from "../../Components/SocialLogin/GithubLogin";
 
 const SigninForm = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const { signInWithGoogle, signInWithGithub, signInWithFacebook } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -37,81 +38,6 @@ const SigninForm = () => {
       });
   };
 
-  const handleGoogleLogin = () => {
-    console.log("Google Sign-In Button Clicked");
-    
-    if (!signInWithGoogle) {
-      console.error("signInWithGoogle is not defined in AuthContext.");
-      return;
-    }
-  
-    signInWithGoogle()
-      .then((result) => {
-        console.log("Google Sign-In Success:", result.user);
-        Swal.fire({
-          title: `Welcome, ${result.user.displayName || result.user.email}!`,
-          text: "You've logged in successfully.",
-          icon: "success",
-          confirmButtonText: "Okay",
-        });
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.error("Google Sign-In Error:", error.message);
-        alert(error.message);
-      });
-  };
-
-  const handleGithubLogin = () => {
-    console.log("GitHub Sign-In Button Clicked");
-    
-    if (!signInWithGithub) {
-      console.error("singnInWithGitHub is not defined in AuthContext.");
-      return;
-    }
-  
-    signInWithGithub()
-      .then((result) => {
-        console.log("GitHub Sign-In Success:", result.user);
-        Swal.fire({
-          title: `Welcome, ${result.user.displayName || result.user.email}!`,
-          text: "You've logged in successfully.",
-          icon: "success",
-          confirmButtonText: "Okay",
-        });
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.error("Github Sign-In Error:", error.message);
-        alert(error.message);
-      });
-  };
-  const handleFacebookLogin = () => {
-    console.log("Facebook Sign-In Button Clicked");
-    
-    if (!signInWithFacebook) {
-      console.error("signInWithFacebook is not defined in AuthContext.");
-      return;
-    }
-  
-    signInWithFacebook()
-      .then((result) => {
-        console.log("Facebook Sign-In Success:", result.user);
-        Swal.fire({
-          title: `Welcome, ${result.user.displayName || result.user.email}!`,
-          text: "You've logged in successfully.",
-          icon: "success",
-          confirmButtonText: "Okay",
-        });
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.error("Facebook Sign-In Error:", error.message);
-        alert(error.message);
-      });
-  };
-  
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
@@ -120,34 +46,9 @@ const SigninForm = () => {
         </h2>
 
         <div className="flex justify-center gap-3 mb-4">
-          <button type="button"
-  onClick={(e) => {
-    e.preventDefault(); // Prevent unexpected form submission issues
-    handleFacebookLogin();
-  }}
-  className="p-3 bg-gray-200 rounded-lg">
-            <FaFacebook size={24} />
-          </button>
-          <button type="button"
-  onClick={(e) => {
-    e.preventDefault(); // Prevent unexpected form submission issues
-    handleGithubLogin();
-  }}
-  className="p-3 bg-gray-200 rounded-lg">
-            <FaGithub size={24} />
-          </button>
-          <button
-  type="button"
-  onClick={(e) => {
-    e.preventDefault(); // Prevent unexpected form submission issues
-    handleGoogleLogin();
-  }}
-  className="p-3 bg-gray-200 rounded-lg"
->
-  <FaGoogle size={24} />
-</button>
-
-         
+          <FaceboolLogin />
+          <GithubLogin />
+          <GoogleLogin />
         </div>
 
         <p className="text-center text-gray-600 mb-4">

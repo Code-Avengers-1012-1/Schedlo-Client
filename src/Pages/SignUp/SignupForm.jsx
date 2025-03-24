@@ -2,6 +2,9 @@ import { useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
+import FaceboolLogin from "../../Components/SocialLogin/FaceboolLogin";
+import GithubLogin from "../../Components/SocialLogin/GithubLogin";
+import GoogleLogin from "../../Components/SocialLogin/GoogleLogin";
 
 const SignupForm = () => {
   const { signUp } = useAuth();
@@ -43,15 +46,9 @@ const SignupForm = () => {
         </h2>
 
         <div className="flex justify-center gap-3 mb-4">
-          <button className="p-3 bg-gray-200 rounded-lg">
-            <FaFacebook size={24} />
-          </button>
-          <button className="p-3 bg-gray-200 rounded-lg">
-            <FaGithub size={24} />
-          </button>
-          <button className="p-3 bg-gray-200 rounded-lg">
-            <FaGoogle size={24} />
-          </button>
+          <FaceboolLogin />
+          <GithubLogin />
+          <GoogleLogin />
         </div>
 
         <p className="text-center text-gray-600 mb-4">
@@ -112,7 +109,12 @@ const SignupForm = () => {
             Register
           </button>
         </form>
-        <p>Have an Account? <Link to="/signin">Sign In</Link></p>
+        <p>
+          Have an Account?{" "}
+          <Link to="/signin" className="text-violet-600 hover:underline">
+            Sign In
+          </Link>
+        </p>
       </div>
     </div>
   );
