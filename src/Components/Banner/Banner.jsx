@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdSchedule, MdArrowForward } from 'react-icons/md';
+import { Link } from 'react-router';
 
 
 const Banner = () => {
@@ -20,21 +21,10 @@ const Banner = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row w-full">
-              <div className="relative flex-grow mb-4 sm:mb-0 sm:mr-2">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full px-6 py-4 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-300 border border-gray-300 placeholder:text-gray-300 pl-12"
-                />
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                  <MdSchedule className="text-white h-5 w-5 " />
-                </div>
-              </div>
-              
-              <button className="bg-white text-purple-600 hover:bg-purple-200 transition-colors px-6 py-4 rounded-lg font-semibold flex items-center justify-center shadow-md hover:shadow-lg">
+              <Link to="/dashboard" className="bg-white text-purple-600 hover:bg-purple-200 transition-colors px-6 py-4 rounded-lg font-semibold flex items-center justify-center shadow-md hover:shadow-lg">
                 Get Started
                 <MdArrowForward className="ml-2" />
-              </button>
+              </Link>
             </div>
             
             <p className="text-sm mt-4 text-purple-200">

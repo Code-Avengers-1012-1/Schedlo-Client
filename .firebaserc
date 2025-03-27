@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "scheduler-e26f4"
-  }
+    "default": "time-scheduler-ba61c",
+    "staging": "time-scheduler-ba61c"
+  },
+  "targets": {},
+  "etags": {}
 }

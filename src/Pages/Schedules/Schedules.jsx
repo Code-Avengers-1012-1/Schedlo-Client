@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
@@ -14,8 +13,10 @@ const Schedules = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const axiosPublic = useAxios();
-  const {user} = useAuth();
+  const { user } = useAuth();
   const userEmail = user?.email;
+  const status = "Upcoming"
+  const reminder = true
 
   const {
     data: scheduleData,
@@ -48,11 +49,11 @@ const Schedules = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("Schedule Details:", { title, date, time});
+    e.preventDefault();
+    console.log("Schedule Details:", { title, date, time });
 
     axiosPublic
-      .post("/schedules", { title, date, time, userEmail })
+      .post("/schedules", { title, date, time, userEmail, status, reminder })
       .then((res) => {
         console.log("schedules api response --> ", res?.data);
         scheduleRefetch();
@@ -70,8 +71,8 @@ const Schedules = () => {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "delete",
+      cancelButtonColor: "gray",
+      confirmButtonText: "Delete",
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axiosPublic.delete(`schedule/${id}`);
@@ -82,7 +83,7 @@ const Schedules = () => {
 
   return (
     <div className="p-6 w-full bg-gray-100 min-h-screen">
-      <div className="flex justify-between items-center py-4">
+      <div className="flex justify-between items-center pb-4">
         <h1 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">
           Schedules & Calendar
         </h1>
@@ -96,15 +97,17 @@ const Schedules = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
-        {scheduleData?.map((schedule, i) => (
-          <div className="bg-[#F4F2EE] p-6 shadow-lg rounded-lg border border-gray-200">
+        {scheduleData?.map((schedule) => (
+          <div className="bg-[#F4F2EE] p-6 shadow-lg rounded-lg border border-gray-200" key={schedule?._id}>
             <h1 className="text-lg font-bold text-gray-800">
               {schedule?.title}
             </h1>
             <p className="text-sm text-gray-500 mt-2">
-              {moment(schedule?.date).subtract(10, "days").calendar()}
+              {moment(schedule?.date).format('L')}
             </p>
-            <p className="text-xs text-gray-500">schedule created by: {schedule?.userEmail}</p>
+            <p className="text-xs text-gray-500">
+              schedule created by: {schedule?.userEmail}
+            </p>
             <div className="flex justify-between items-center">
               <p className="text-md font-medium text-gray-700 mt-1">
                 {schedule?.time}

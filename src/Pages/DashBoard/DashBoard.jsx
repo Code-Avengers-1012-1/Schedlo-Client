@@ -10,7 +10,7 @@ const Dashboard = () => {
   const axiosPublic = useAxios();
   const { user } = useAuth();
 
-  const { data: boardsData = [] } = useQuery({
+  const { data: boardsData = [], isPending: boardIsPending } = useQuery({
     queryKey: ["boards"],
     queryFn: async () => {
       const res = await axiosPublic.get(`boards?email=${user?.email}`);
@@ -33,6 +33,8 @@ const Dashboard = () => {
       return res?.data;
     },
   });
+
+  if (boardIsPending) return 'Loading...'
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-50">
