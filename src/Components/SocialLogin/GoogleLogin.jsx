@@ -1,13 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useContext } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../auth/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
+import useAxios from "../../hooks/useAxios";
 
 const GoogleLogin = () => {
   const { signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxios();
   const from = location.state?.from?.pathname || "/";
 
   const handleGoogleLogin = () => {
@@ -19,8 +22,16 @@ const GoogleLogin = () => {
     }
 
     signInWithGoogle()
-      .then((result) => {
+      .then( async (result) => {
         console.log("Google Sign-In Success:", result.user);
+
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          photo: result?.user?.photoURL,
+        };
+
+
         Swal.fire({
           title: `Welcome, ${result.user.displayName || result.user.email}!`,
           text: "You've logged in successfully.",

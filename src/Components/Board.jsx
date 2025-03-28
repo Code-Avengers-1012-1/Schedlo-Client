@@ -112,12 +112,12 @@ const Board = () => {
                   </div>
 
                   <div>
-                    {cardData?.map((card, i) => (
+                    {cardData?.map((card) => (
                       <>
                         {list._id === card?.listId ? (
                           <div
-                            key={i}
-                            className={`bg-gray-100 p-4 rounded-lg shadow-sm flex items-start gap-3 ${
+                            key={card?._id}
+                            className={`bg-gray-100 p-4 mb-2 rounded-lg shadow-sm flex items-start gap-3 ${
                               card?.completed ? "opacity-50" : ""
                             }`}
                           >

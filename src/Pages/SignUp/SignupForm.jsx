@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
 import FaceboolLogin from "../../Components/SocialLogin/FaceboolLogin";
 import GithubLogin from "../../Components/SocialLogin/GithubLogin";
 import GoogleLogin from "../../Components/SocialLogin/GoogleLogin";
+import useAxios from "../../hooks/useAxios";
+
 
 const SignupForm = () => {
   const { signUp } = useAuth();
+  const axiosPublic = useAxios()
 
   const [formData, setFormData] = useState({
     name: "",
@@ -25,9 +27,11 @@ const SignupForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
+
+    await axiosPublic.post("/users", formData)
 
     signUp(formData?.email, formData?.password)
       .then((userCredential) => {

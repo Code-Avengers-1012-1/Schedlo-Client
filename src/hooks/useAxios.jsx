@@ -3,7 +3,7 @@ import React from "react";
 
 const useAxios = () => {
   const axiosPublic = axios.create({
-    baseURL: "http://localhost:5000/",
+    baseURL: "https://time-scheduler-server.vercel.app/",
   });
 
   return axiosPublic;
