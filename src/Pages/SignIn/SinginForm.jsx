@@ -11,6 +11,7 @@ const SigninForm = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [error, setError] = useState(null);
   const from = location.state?.from?.pathname || "/";
 
   const [formData, setFormData] = useState({
@@ -35,6 +36,7 @@ const SigninForm = () => {
       })
       .catch((err) => {
         console.log("ERR: ", err);
+        setError(err || null)
       });
   };
 
@@ -80,7 +82,7 @@ const SigninForm = () => {
             Log in
           </button>
         </form>
-
+        {error && <p className="text-red-500">{error?.message}</p>}
         <p className="text-center mt-4">
           New here?{" "}
           <Link to="/signup" className="text-violet-600 hover:underline">

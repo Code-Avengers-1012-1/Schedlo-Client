@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
 
-    <header className="relative bg-white dark:bg-gray-900 shadow-md">
+    <header className="relative bg-[#3B3B58]">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         
         {/* Left - Logo or Brand Name */}

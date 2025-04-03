@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 
 const Banner = () => {
   return (
-    <div className="bg-gradient-to-r from-purple-700 to-purple-500 py-16">
+    <div className="bg-gradient-to-r from-purple-900 to-purple-500 py-16">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Left side - Text, input and button */}
@@ -16,7 +16,7 @@ const Banner = () => {
             </h1>
             
             <p className="text-lg mb-8 text-purple-100">
-              Streamline your workflow with Time Scheduler. Create, organize, and 
+              Streamline your workflow with Schedlo. Create, organize and 
               track tasks efficiently to accomplish more in less time.
             </p>
             

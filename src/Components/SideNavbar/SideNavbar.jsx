@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const SideNavbar = ({ onClose }) => {
   return (
-    <nav className="h-full flex flex-col p-5 bg-white shadow-lg">
+    <nav className="h-full flex flex-col p-5 bg-[#8530CB] text-white">
       {/* Title */}
       <Link
         to="/"
@@ -26,7 +26,7 @@ const SideNavbar = ({ onClose }) => {
               `block px-4 py-2 rounded-md ${
                 isActive
                   ? "bg-gray-200 text-black"
-                  : "text-gray-800 hover:bg-gray-300"
+                  : "hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -41,7 +41,7 @@ const SideNavbar = ({ onClose }) => {
               `block px-4 py-2 rounded-md ${
                 isActive
                   ? "bg-gray-200 text-black"
-                  : "text-gray-800 hover:bg-gray-300"
+                  : "hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -56,7 +56,7 @@ const SideNavbar = ({ onClose }) => {
               `block px-4 py-2 rounded-md ${
                 isActive
                   ? "bg-gray-200 text-black"
-                  : "text-gray-800 hover:bg-gray-300"
+                  : "hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -71,7 +71,7 @@ const SideNavbar = ({ onClose }) => {
               `block px-4 py-2 rounded-md ${
                 isActive
                   ? "bg-gray-200 text-black"
-                  : "text-gray-800 hover:bg-gray-300"
+                  : " hover:bg-gray-300"
               }`
             }
             onClick={onClose}
@@ -86,7 +86,7 @@ const SideNavbar = ({ onClose }) => {
               `block px-4 py-2 rounded-md ${
                 isActive
                   ? "bg-gray-200 text-black"
-                  : "text-gray-800 hover:bg-gray-300"
+                  : " hover:bg-gray-300"
               }`
             }
             onClick={onClose}

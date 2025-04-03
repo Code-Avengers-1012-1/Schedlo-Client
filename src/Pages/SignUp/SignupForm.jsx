@@ -1,15 +1,16 @@
-import { useState } from "react";
+ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import FaceboolLogin from "../../Components/SocialLogin/FaceboolLogin";
 import GithubLogin from "../../Components/SocialLogin/GithubLogin";
 import GoogleLogin from "../../Components/SocialLogin/GoogleLogin";
 import useAxios from "../../hooks/useAxios";
 
-
 const SignupForm = () => {
   const { signUp } = useAuth();
-  const axiosPublic = useAxios()
+  const axiosPublic = useAxios();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,15 +32,27 @@ const SignupForm = () => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
 
-    await axiosPublic.post("/users", formData)
+    try {
+      const { name, email, password } = formData;
+      const userData = { name, email };
 
-    signUp(formData?.email, formData?.password)
-      .then((userCredential) => {
-        console.log("User data --> ", userCredential?.user);
-      })
-      .catch((err) => {
-        console.log("ERR --> ", err);
-      });
+      const res = await axiosPublic.get(`user?email=${email}`);
+
+      if (res?.data && Object.keys(res.data).length > 0) {
+        alert("user already axist");
+        return;
+      }
+
+      await axiosPublic.post("users", userData);
+
+      const userCredential = await signUp(email, password);
+      console.log("user data --> ", userCredential?.user);
+      navigate("/");
+    } 
+    catch (err) {
+      console.log("ERR --> ", err);
+      setError(err);
+    }
   };
 
   return (
@@ -113,6 +126,7 @@ const SignupForm = () => {
             Register
           </button>
         </form>
+        {error && <p className="text-red-500">{error?.message}</p>}
         <p>
           Have an Account?{" "}
           <Link to="/signin" className="text-violet-600 hover:underline">
