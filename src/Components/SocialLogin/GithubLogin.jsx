@@ -3,11 +3,13 @@ import { FaGithub } from "react-icons/fa";
 import { AuthContext } from "../../auth/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
+import useAxios from "../../hooks/useAxios";
 
 const GithubLogin = () => {
   const { signInWithGithub } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxios();
   const from = location.state?.from?.pathname || "/";
 
   const handleGithubLogin = () => {
@@ -19,8 +21,17 @@ const GithubLogin = () => {
     }
 
     signInWithGithub()
-      .then((result) => {
+      .then( async (result) => {
         console.log("GitHub Sign-In Success:", result.user);
+
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          photo: result?.user?.photoURL,
+        };
+
+        await axiosPublic.post("users", userInfo)
+        
         Swal.fire({
           title: `Welcome, ${result.user.displayName || result.user.email}!`,
           text: "You've logged in successfully.",

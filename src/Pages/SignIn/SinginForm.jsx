@@ -89,6 +89,7 @@ const SigninForm = () => {
             Sign Up
           </Link>
         </p>
+        <Link to="/forgot-password" className="text-blue-500 underline">Forgot Password?</Link>
       </div>
     </div>
   );

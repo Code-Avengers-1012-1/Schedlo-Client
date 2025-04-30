@@ -12,6 +12,7 @@ import Profile from "../Pages/Profile/Profile";
 import Schedules from "../Pages/Schedules/Schedules";
 import Board from "../Components/Board";
 import PrivateRoute from "./PrivateRoute";
+import ForgotPassword from "../Components/ForgotPassword/ForgotPassword";
 
 const Routers = () => {
   return (
@@ -26,6 +27,7 @@ const Routers = () => {
         <Route path="profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path="schedules" element={<PrivateRoute><Schedules /></PrivateRoute>} />
         <Route path="board/:id" element={<PrivateRoute><Board /></PrivateRoute>}></Route>
+        <Route path="forgot-password" element={<ForgotPassword/>}></Route>
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>

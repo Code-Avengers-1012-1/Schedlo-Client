@@ -31,6 +31,7 @@ const GoogleLogin = () => {
           photo: result?.user?.photoURL,
         };
 
+        await axiosPublic.post("users", userInfo)
 
         Swal.fire({
           title: `Welcome, ${result.user.displayName || result.user.email}!`,

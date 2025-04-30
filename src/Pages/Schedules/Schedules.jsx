@@ -1,4 +1,4 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
@@ -15,8 +15,8 @@ const Schedules = () => {
   const axiosPublic = useAxios();
   const { user } = useAuth();
   const userEmail = user?.email;
-  const status = "Upcoming"
-  const reminder = true
+  const status = "Upcoming";
+  const reminder = true;
 
   const {
     data: scheduleData,
@@ -96,32 +96,39 @@ const Schedules = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
-        {scheduleData?.map((schedule) => (
-          <div className="bg-[#F4F2EE] p-6 shadow-lg rounded-lg border border-gray-200" key={schedule?._id}>
-            <h1 className="text-lg font-bold text-gray-800">
-              {schedule?.title}
-            </h1>
-            <p className="text-sm text-gray-500 mt-2">
-              {moment(schedule?.date).format('L')}
-            </p>
-            <p className="text-xs text-gray-500">
-              schedule created by: {schedule?.userEmail}
-            </p>
-            <div className="flex justify-between items-center">
-              <p className="text-md font-medium text-gray-700 mt-1">
-                {schedule?.time}
+      {scheduleData?.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
+          {scheduleData.map((schedule) => (
+            <div
+              className="bg-[#F4F2EE] p-6 shadow-lg rounded-lg border border-gray-200"
+              key={schedule?._id}
+            >
+              <h1 className="text-lg font-bold text-gray-800">
+                {schedule?.title}
+              </h1>
+              <p className="text-sm text-gray-500 mt-2">
+                {moment(schedule?.date).format("L")}
               </p>
-              <button
-                onClick={() => handleRemove(schedule?._id)}
-                className="text-red-400"
-              >
-                <RiDeleteBin3Line />
-              </button>
+              <p className="text-xs text-gray-500">
+                schedule created by: {schedule?.userEmail}
+              </p>
+              <div className="flex justify-between items-center">
+                <p className="text-md font-medium text-gray-700 mt-1">
+                  {schedule?.time}
+                </p>
+                <button
+                  onClick={() => handleRemove(schedule?._id)}
+                  className="text-red-400"
+                >
+                  <RiDeleteBin3Line />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-red-500">No data added yet</p>
+      )}
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">

@@ -1,13 +1,30 @@
+ 
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import useAxios from "../../hooks/useAxios";
+import useAuth from "../../hooks/useAuth";
 
 const Members = () => {
-  // Dummy members data
-  const members = [
-    { id: 1, name: "John Doe", email: "john@example.com", tasks: 5 },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", tasks: 8 },
-    { id: 3, name: "Michael Brown", email: "michael@example.com", tasks: 3 },
-    { id: 4, name: "Emily Johnson", email: "emily@example.com", tasks: 10 },
-  ];
+
+  const axiosPublic = useAxios();
+  const {user} = useAuth();
+
+  const {data: cards = []} = useQuery({
+    queryKey: ['card'],
+    queryFn: async () => {
+      const result = await axiosPublic.get(`cards?email=${user?.email}`)
+      return result?.data
+    }
+  })
+
+  const {data: members = []} = useQuery({
+    queryKey: ['members'],
+    queryFn: async () => {
+      const res = await axiosPublic.get("users")
+      return res?.data;
+    }
+  })
+
 
   return (
     <div className="p-6 w-full min-h-screen bg-gray-100">
@@ -33,7 +50,7 @@ const Members = () => {
 
             {/* Task Badge */}
             <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-              {member.tasks} Tasks
+              {cards.length} Tasks
             </div>
           </div>
         ))}
